@@ -5,7 +5,7 @@ let statusCode = 200;
 const headers = {
     "Content-Type": "application/json"
 };
-export async function handler(event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> {
+export async function handler(event: APIGatewayEvent, _context: Context): Promise<APIGatewayProxyResult> {
 
     console.log(event)
 

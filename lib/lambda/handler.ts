@@ -19,12 +19,13 @@ export async function handler(event: APIGatewayEvent, context: Context): Promise
     switch (event.httpMethod) {
         case "GET":
             if (!event.pathParameters) throw new Error("No path")
+            if (!event.pathParameters.item) throw new Error("No path")
 
             console.log(event.pathParameters.item)
             body = await dynamoClient.get({
                 TableName: tableName,
                 Key: {
-                    id: event.pathParameters.items
+                    id: parseInt(event.pathParameters.item)
                 }
             }).promise()
 

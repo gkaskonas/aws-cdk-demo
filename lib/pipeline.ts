@@ -48,7 +48,7 @@ export class CdkPipelineStack extends Stack {
                 new ShellStep('TestService', {
                     commands: [
                         // Use 'curl' to GET the given URL and fail if it returns an error
-                        'curl -Ssf $ENDPOINT_URL',
+                        'curl -Ssf $ENDPOINT_URL/items/1',
                     ],
                     envFromCfnOutputs: {
                         // Get the stack Output from the Stage and make it available in

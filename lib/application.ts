@@ -1,6 +1,6 @@
 import * as apigw from '@aws-cdk/aws-apigateway';
 import * as lambda from '@aws-cdk/aws-lambda';
-import { CfnOutput, Construct, Duration, Stack, StackProps } from '@aws-cdk/core';
+import { CfnOutput, Construct, Stack, StackProps } from '@aws-cdk/core';
 import * as path from 'path';
 import { AttributeType, Table, TableEncryption } from "@aws-cdk/aws-dynamodb"
 import { Cors } from '@aws-cdk/aws-apigateway';
@@ -53,7 +53,7 @@ export class ApplicationStack extends Stack {
     const getBookIntegration = new apigw.LambdaIntegration(handler);
 
     const items = api.root.addResource('items');
-    const getItems = items.addMethod('GET', getBookIntegration);  // GET /items
+    items.addMethod('GET', getBookIntegration);  // GET /items
     items.addMethod('POST', getBookIntegration); // POST /items
 
     const item = items.addResource('{item}');

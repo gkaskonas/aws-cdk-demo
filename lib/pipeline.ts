@@ -1,3 +1,4 @@
+import { ComputeType, LinuxBuildImage } from '@aws-cdk/aws-codebuild';
 import { Construct, Stack, StackProps } from '@aws-cdk/core';
 import { CodePipeline, CodePipelineSource, ShellStep } from "@aws-cdk/pipelines";
 import { PipelineStage } from './appStage';
@@ -28,15 +29,21 @@ export class CdkPipelineStack extends Stack {
                 ],
             }),
             crossAccountKeys: true,
+            codeBuildDefaults: {
+                buildEnvironment: {
+                    computeType: ComputeType.SMALL,
+                    buildImage: LinuxBuildImage.STANDARD_5_0
+                }
+            }
 
         });
 
         // This is where we add the application stages
 
-        const preprod = new PipelineStage(this, 'PreProd', {
+        const dev = new PipelineStage(this, 'dev', {
             env: { account: "404319983256", region: "eu-west-1" },
         })
-        pipeline.addStage(preprod, {
+        pipeline.addStage(dev, {
             post: [
                 new ShellStep('TestService', {
                     commands: [
@@ -46,7 +53,7 @@ export class CdkPipelineStack extends Stack {
                     envFromCfnOutputs: {
                         // Get the stack Output from the Stage and make it available in
                         // the shell script as $ENDPOINT_URL.
-                        ENDPOINT_URL: preprod.urlOutput,
+                        ENDPOINT_URL: dev.urlOutput,
                     },
                 }),
 

@@ -20,6 +20,8 @@ export class ApplicationStack extends Stack {
         name: "id",
         type: AttributeType.NUMBER
       },
+      readCapacity: 1,
+      writeCapacity: 1
     })
 
     // The Lambda function that contains the functionality

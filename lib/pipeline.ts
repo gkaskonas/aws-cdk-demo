@@ -27,12 +27,30 @@ export class CdkPipelineStack extends Stack {
                     'npx cdk synth'
                 ],
             }),
-            crossAccountKeys: true
+            crossAccountKeys: true,
+            
         });
 
         // This is where we add the application stages
-        pipeline.addStage(new PipelineStage(this, 'PreProd', {
+
+        const preprod = new PipelineStage(this, 'PreProd', {
             env: { account: "404319983256", region: "eu-west-1" },
-        }));
+        })
+        pipeline.addStage(preprod, {
+            post: [
+                new ShellStep('TestService', {
+                  commands: [
+                    // Use 'curl' to GET the given URL and fail if it returns an error
+                    'curl -Ssf $ENDPOINT_URL',
+                  ],
+                  envFromCfnOutputs: {
+                    // Get the stack Output from the Stage and make it available in
+                    // the shell script as $ENDPOINT_URL.
+                    ENDPOINT_URL: preprod.urlOutput,
+                  },
+                }),
+          
+              ]
+        });
     }
 }

@@ -62,8 +62,6 @@ export class ApplicationStack extends Stack {
     const getItems = items.addMethod('GET', getBookIntegration);  // GET /items
     items.addMethod('POST', getBookIntegration); // POST /items
 
-    getItems
-
     const item = items.addResource('{item}');
     item.addMethod('GET');   // GET /items/{item}
 

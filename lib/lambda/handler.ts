@@ -29,7 +29,8 @@ export async function handler(event: APIGatewayEvent, context: Context): Promise
                 }
             }).promise()
 
-            const response = JSON.stringify(body)
+            body = JSON.stringify(body);
+            break;
         case "POST":
             if (!event.body) throw new Error("No body!")
             let requestJSON = JSON.parse(event.body);

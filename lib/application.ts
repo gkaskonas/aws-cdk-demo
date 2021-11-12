@@ -4,6 +4,7 @@ import { CfnOutput, Construct, Stack, StackProps } from '@aws-cdk/core';
 import * as path from 'path';
 import { AttributeType, Table, TableEncryption } from "@aws-cdk/aws-dynamodb"
 import { Cors } from '@aws-cdk/aws-apigateway';
+import { RetentionDays } from '@aws-cdk/aws-logs';
 /**
  * A stack for our simple Lambda-powered web service
  */
@@ -33,7 +34,8 @@ export class ApplicationStack extends Stack {
       code: lambda.Code.fromAsset(path.resolve(__dirname, 'lambda')),
       environment: {
         TABLE_ID: table.tableName
-      }
+      },
+      logRetention: RetentionDays.TWO_WEEKS
     });
 
     table.grantReadWriteData(handler)

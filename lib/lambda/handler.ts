@@ -18,6 +18,15 @@ export async function handler(event: APIGatewayEvent, _context: Context): Promis
 
     switch (event.httpMethod) {
         case "GET":
+            if (event.resource == "/items") {
+                body = await dynamoClient.scan({
+                    TableName: tableName
+                }).promise()
+
+                body = JSON.stringify(body);
+                break;
+            }
+
             if (!event.pathParameters) throw new Error("No path")
             if (!event.pathParameters.item) throw new Error("No path")
 

@@ -1,4 +1,4 @@
-import { Construct,  Stack, StackProps } from '@aws-cdk/core';
+import { Construct, Stack, StackProps } from '@aws-cdk/core';
 import { CodePipeline, CodePipelineSource, ShellStep } from "@aws-cdk/pipelines";
 import { PipelineStage } from './appStage';
 
@@ -28,7 +28,7 @@ export class CdkPipelineStack extends Stack {
                 ],
             }),
             crossAccountKeys: true,
-            
+
         });
 
         // This is where we add the application stages
@@ -39,18 +39,18 @@ export class CdkPipelineStack extends Stack {
         pipeline.addStage(preprod, {
             post: [
                 new ShellStep('TestService', {
-                  commands: [
-                    // Use 'curl' to GET the given URL and fail if it returns an error
-                    'curl -Ssf $ENDPOINT_URL',
-                  ],
-                  envFromCfnOutputs: {
-                    // Get the stack Output from the Stage and make it available in
-                    // the shell script as $ENDPOINT_URL.
-                    ENDPOINT_URL: preprod.urlOutput,
-                  },
+                    commands: [
+                        // Use 'curl' to GET the given URL and fail if it returns an error
+                        'curl -Ssf $ENDPOINT_URL',
+                    ],
+                    envFromCfnOutputs: {
+                        // Get the stack Output from the Stage and make it available in
+                        // the shell script as $ENDPOINT_URL.
+                        ENDPOINT_URL: preprod.urlOutput,
+                    },
                 }),
-          
-              ]
+
+            ]
         });
     }
 }

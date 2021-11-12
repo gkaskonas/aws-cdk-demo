@@ -39,14 +39,8 @@ export class ApplicationStack extends Stack {
 
     // An API Gateway to make the Lambda web-accessible
     const api = new apigw.LambdaRestApi(this, id, {
-      restApiName: `${this.toString()}-api`,
+      restApiName: `webservice-api`,
       handler,
-      deployOptions: {
-        cachingEnabled: true,
-        cacheTtl: Duration.hours(1),
-        cacheClusterEnabled: true,
-        cacheClusterSize: "0.5",
-      },
       defaultCorsPreflightOptions: {
         allowOrigins: Cors.ALL_ORIGINS,
         allowMethods: Cors.ALL_METHODS,

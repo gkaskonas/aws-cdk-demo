@@ -16,7 +16,6 @@ export async function handler(event: APIGatewayEvent, context: Context): Promise
 
     let body;
 
-
     switch (event.httpMethod) {
         case "GET":
             if (!event.pathParameters) throw new Error("No path")
@@ -35,7 +34,7 @@ export async function handler(event: APIGatewayEvent, context: Context): Promise
             let requestJSON = JSON.parse(event.body);
             await dynamoClient
                 .put({
-                    TableName: "http-crud-tutorial-items",
+                    TableName: tableName,
                     Item: {
                         id: requestJSON.id,
                         price: requestJSON.price,

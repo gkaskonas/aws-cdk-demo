@@ -52,11 +52,10 @@ export class ApplicationStack extends Stack {
         allowMethods: Cors.ALL_METHODS,
         allowHeaders: Cors.DEFAULT_HEADERS,
       },
-    });
-
-    const getBookIntegration = new apigw.LambdaIntegration(handler, {
       proxy: false
     });
+
+    const getBookIntegration = new apigw.LambdaIntegration(handler);
 
     const items = api.root.addResource('items');
     const getItems = items.addMethod('GET', getBookIntegration);  // GET /items

@@ -62,7 +62,7 @@ export class ApplicationStack extends Stack {
     items.addMethod('POST', getBookIntegration); // POST /items
 
     const item = items.addResource('{item}');
-    item.addMethod('GET');   // GET /items/{item}
+    item.addMethod('GET', getBookIntegration);   // GET /items/{item}
 
     this.urlOutput = new CfnOutput(this, 'Url', {
       value: api.url,

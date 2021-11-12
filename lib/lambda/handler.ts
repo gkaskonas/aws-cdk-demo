@@ -23,7 +23,7 @@ export async function handler(event: APIGatewayEvent, _context: Context): Promis
                     TableName: tableName
                 }).promise()
 
-                body = JSON.stringify(body);
+                body = JSON.stringify(body.Items);
                 break;
             }
 

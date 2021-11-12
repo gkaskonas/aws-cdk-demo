@@ -2,7 +2,7 @@ import * as apigw from '@aws-cdk/aws-apigateway';
 import * as lambda from '@aws-cdk/aws-lambda';
 import { CfnOutput, Construct, Duration, Stack, StackProps } from '@aws-cdk/core';
 import * as path from 'path';
-import { AttributeType, Table } from "@aws-cdk/aws-dynamodb"
+import { AttributeType, Table, TableEncryption } from "@aws-cdk/aws-dynamodb"
 import { Cors } from '@aws-cdk/aws-apigateway';
 /**
  * A stack for our simple Lambda-powered web service
@@ -22,7 +22,8 @@ export class ApplicationStack extends Stack {
         type: AttributeType.NUMBER
       },
       readCapacity: 1,
-      writeCapacity: 1
+      writeCapacity: 1,
+      encryption: TableEncryption.AWS_MANAGED,
     })
 
     // The Lambda function that contains the functionality

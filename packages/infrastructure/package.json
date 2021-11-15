@@ -1,11 +1,12 @@
 {
-  "name": "aws-cdk-demo",
+  "name": "infrastructure",
   "version": "0.1.0",
   "bin": {
-    "aws-cdk-demo": "bin/aws-cdk-demo.js"
+    "infrastructure": "bin/aws-cdk-demo.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk"
@@ -41,5 +42,8 @@
     "@aws-cdk/aws-cloudfront-origins": "1.132.0",
     "@types/aws-lambda": "^8.10.85",
     "source-map-support": "^0.5.16"
+  },
+  "resolutions": {
+    "table": "6.7.2"
   }
 }

@@ -17,9 +17,9 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^3.22.1"
-  },
+    "lerna": "4.0.0"
+    },
   "resolutions": {
-    "table": "6.0.4"
+    "table": "6.7.2"
   }
 }

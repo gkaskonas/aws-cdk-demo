@@ -4,7 +4,7 @@ import { WebsitePipelineStack } from '../lib/pipeline';
 
 const app = new App();
 
-new WebsitePipelineStack(app, 'CdkpipelinesDemoPipelineStack', {
+new WebsitePipelineStack(app, 'nextjsWebsitePipeline', {
   env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: "eu-west-1" },
 });
 

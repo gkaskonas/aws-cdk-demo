@@ -18,7 +18,7 @@ export class WebsiteStack extends Stack {
       });
 
      new BucketDeployment(this, "deployment", {
-        sources: [Source.asset("../nextjs-blog/public")],
+        sources: [Source.asset("./nextjs-blog/out")],
         destinationBucket: websiteBucket,
         distribution
     })

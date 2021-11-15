@@ -2,7 +2,6 @@ import { ComputeType, LinuxBuildImage } from '@aws-cdk/aws-codebuild';
 import { Construct, Stack, StackProps } from '@aws-cdk/core';
 import { CodePipeline, CodePipelineSource, ShellStep } from "@aws-cdk/pipelines";
 import { AppStage } from './appStage';
-import { Website } from './websiteStage';
 
 /**
  * The stack that defines the application pipeline
@@ -43,13 +42,10 @@ export class WebsitePipelineStack extends Stack {
 
         // This is where we add the application stages
 
-         new Website(this, 'websiteDev', {
-            env: { account: "404319983256", region: "eu-west-1" },
-        })
-
         const appDev = new AppStage(this, 'dev', {
             env: { account: "404319983256", region: "eu-west-1" },
         })
+
         pipeline.addStage(appDev, {
             post: [
                 new ShellStep('TestService', {

@@ -1,5 +1,4 @@
 import { Construct, Stack, StackProps } from '@aws-cdk/core';
-import { BucketDeployment, Source, } from '@aws-cdk/aws-s3-deployment';
 import { Bucket } from '@aws-cdk/aws-s3';
 import { Distribution } from '@aws-cdk/aws-cloudfront';
 import { S3Origin } from '@aws-cdk/aws-cloudfront-origins';
@@ -12,15 +11,15 @@ export class WebsiteStack extends Stack {
         publicReadAccess: false,
       });
 
-    const distribution = new Distribution(this, 'Distribution', {
+     new Distribution(this, 'Distribution', {
         defaultBehavior: { origin: new S3Origin(websiteBucket) },
 
       });
 
-     new BucketDeployment(this, "deployment", {
-        sources: [Source.asset("../nextjs-blog/public")],
-        destinationBucket: websiteBucket,
-        distribution
-    })
+    //  new BucketDeployment(this, "deployment", {
+    //     sources: [Source.asset("../nextjs-blog/public")],
+    //     destinationBucket: websiteBucket,
+    //     distribution
+    // })
   }
 }

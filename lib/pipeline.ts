@@ -25,6 +25,7 @@ export class WebsitePipelineStack extends Stack {
                 // Install dependencies, build and run cdk synth
                 commands: [
                     'npm ci',
+                    'cd nextjs-blog && npm ci',
                     'npm run build',
                     'cd nextjs-blog && npm run build',
                     'npx cdk synth'

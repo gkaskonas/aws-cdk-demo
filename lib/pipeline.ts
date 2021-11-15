@@ -44,6 +44,14 @@ export class CdkPipelineStack extends Stack {
             env: { account: "404319983256", region: "eu-west-1" },
         })
         pipeline.addStage(dev, {
+            pre: [
+                new ShellStep("BuildWebsite", {
+                    commands: [
+                        "cd nextjs-blog",
+                        "npm run build"
+                    ]
+                }),
+            ],
             post: [
                 new ShellStep('TestService', {
                     commands: [

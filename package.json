@@ -1,45 +1,25 @@
 {
-  "name": "aws-cdk-demo",
+  "name": "nextjs-cdk",
   "version": "0.1.0",
-  "bin": {
-    "aws-cdk-demo": "bin/aws-cdk-demo.js"
-  },
+  "license": "MIT",
+  "private": true,
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest",
-    "cdk": "cdk"
+    "build": "lerna run build",
+    "clean": "lerna run clean",
+    "install": "lerna run install",
+    "watch": "lerna run watch --stream",
+    "test": "lerna run test --",
+    "cdk": "yarn --cwd packages/infrastructure cdk",
+    "dev": "yarn --cwd packages/application dev",
+    "deploy": "yarn build && yarn cdk synth && yarn cdk deploy --require-approval never"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
-    "@aws-cdk/assertions": "1.132.0",
-    "@types/jest": "^26.0.10",
-    "@types/node": "10.17.27",
-    "@typescript-eslint/eslint-plugin": "^5.3.1",
-    "@typescript-eslint/parser": "^5.3.1",
-    "aws-cdk": "1.132.0",
-    "eslint": "^8.2.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "jest": "^26.4.2",
-    "prettier": "2.4.1",
-    "ts-jest": "^26.2.0",
-    "ts-node": "^9.0.0",
-    "typescript": "~3.9.7"
+    "lerna": "^3.22.1"
   },
-  "dependencies": {
-    "@aws-cdk/aws-apigateway": "^1.132.0",
-    "@aws-cdk/aws-lambda": "^1.132.0",
-    "@aws-cdk/aws-logs": "^1.132.0",
-    "aws-sdk": "2.1027.0",
-    "@aws-cdk/core": "1.132.0",
-    "@aws-cdk/pipelines": "^1.132.0",
-    "@aws-cdk/aws-codebuild": "^1.132.0",
-    "@aws-cdk/aws-dynamodb": "^1.132.0",
-    "@aws-cdk/aws-s3-deployment": "1.132.0",
-    "@aws-cdk/aws-s3": "1.132.0",
-    "@aws-cdk/aws-cloudfront": "1.132.0",
-    "@aws-cdk/aws-cloudfront-origins": "1.132.0",
-    "@types/aws-lambda": "^8.10.85",
-    "source-map-support": "^0.5.16"
+  "resolutions": {
+    "table": "6.0.4"
   }
 }

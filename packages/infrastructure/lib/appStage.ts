@@ -7,16 +7,18 @@ import { WebsiteStack } from './website';
  */
 export class AppStage extends Stage {
   public readonly urlOutput: CfnOutput;
+  public readonly cloudfrontUrl: CfnOutput;
 
   constructor(scope: Construct, id: string, props?: StageProps) {
     super(scope, id, props);
 
     const service = new ApplicationStack(this, 'WebService');
-    new WebsiteStack(this, 'website');
+    const website = new WebsiteStack(this, 'website');
 
 
     // Expose CdkpipelinesDemoStack's output one level higher
     this.urlOutput = service.urlOutput;
+    this.cloudfrontUrl = website.cloudfrontEndpoint;
 
 
   }

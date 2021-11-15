@@ -27,7 +27,7 @@ export class WebsitePipelineStack extends Stack {
                     'npm ci',
                     'cd nextjs-blog && npm ci',
                     'npm run build',
-                    'cd nextjs-blog && npm run build',
+                    'cd ../ && npm run build',
                     'npx cdk synth'
                 ],
             }),

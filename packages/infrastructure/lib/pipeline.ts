@@ -57,17 +57,6 @@ export class WebsitePipelineStack extends Stack {
                         ENDPOINT_URL: appDev.urlOutput,
                     },
                 }),
-                new ShellStep('TestWebsite', {
-                    commands: [
-                        // Use 'curl' to GET the given URL and fail if it returns an error
-                        'curl -Ssf $WEBSITE_URL/',
-                    ],
-                    envFromCfnOutputs: {
-                        // Get the stack Output from the Stage and make it available in
-                        // the shell script as $ENDPOINT_URL.
-                        WEBSITE_URL: appDev.cloudfrontUrl,
-                    },
-                }),
             ]
         });
     }

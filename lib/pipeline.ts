@@ -50,14 +50,6 @@ export class WebsitePipelineStack extends Stack {
             env: { account: "404319983256", region: "eu-west-1" },
         })
         pipeline.addStage(appDev, {
-            pre: [
-                new ShellStep("BuildWebsite", {
-                    commands: [
-                        "cd nextjs-blog",
-                        "npm run build"
-                    ]
-                }),
-            ],
             post: [
                 new ShellStep('TestService', {
                     commands: [

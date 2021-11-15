@@ -1,12 +1,13 @@
 import { ComputeType, LinuxBuildImage } from '@aws-cdk/aws-codebuild';
 import { Construct, Stack, StackProps } from '@aws-cdk/core';
 import { CodePipeline, CodePipelineSource, ShellStep } from "@aws-cdk/pipelines";
-import { PipelineStage } from './appStage';
+import { AppStage } from './appStage';
+import { Website } from './websiteStage';
 
 /**
  * The stack that defines the application pipeline
  */
-export class CdkPipelineStack extends Stack {
+export class WebsitePipelineStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
 
@@ -25,6 +26,7 @@ export class CdkPipelineStack extends Stack {
                 commands: [
                     'npm ci',
                     'npm run build',
+                    'cd nextjs-blog && npm run build',
                     'npx cdk synth'
                 ],
             }),
@@ -40,10 +42,14 @@ export class CdkPipelineStack extends Stack {
 
         // This is where we add the application stages
 
-        const dev = new PipelineStage(this, 'dev', {
+         new Website(this, 'websiteDev', {
             env: { account: "404319983256", region: "eu-west-1" },
         })
-        pipeline.addStage(dev, {
+
+        const appDev = new AppStage(this, 'dev', {
+            env: { account: "404319983256", region: "eu-west-1" },
+        })
+        pipeline.addStage(appDev, {
             pre: [
                 new ShellStep("BuildWebsite", {
                     commands: [
@@ -61,7 +67,7 @@ export class CdkPipelineStack extends Stack {
                     envFromCfnOutputs: {
                         // Get the stack Output from the Stage and make it available in
                         // the shell script as $ENDPOINT_URL.
-                        ENDPOINT_URL: dev.urlOutput,
+                        ENDPOINT_URL: appDev.urlOutput,
                     },
                 }),
 

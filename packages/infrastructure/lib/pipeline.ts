@@ -23,7 +23,7 @@ export class WebsitePipelineStack extends Stack {
       synth: new ShellStep("Synth", {
         // Where the source can be found
         input: CodePipelineSource.connection("gkaskonas/aws-cdk-demo", "main", {
-          connectionArn: `arn:aws:codestar-connections:${this.region}:${this.account}}:connection/a4848827-92c7-4203-b816-81ec422b6c26`,
+          connectionArn: `arn:aws:codestar-connections:${this.region}:${this.account}:connection/a4848827-92c7-4203-b816-81ec422b6c26`,
         }),
 
         // Install dependencies, build and run cdk synth

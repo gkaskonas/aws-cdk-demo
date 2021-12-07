@@ -28,6 +28,7 @@ export class WebsitePipelineStack extends Stack {
 
         // Install dependencies, build and run cdk synth
         commands: ["yarn install", "yarn build", "yarn cdk synth"],
+        primaryOutputDirectory: "packages/infrastructure/cdk.out",
       }),
       crossAccountKeys: true,
       codeBuildDefaults: {

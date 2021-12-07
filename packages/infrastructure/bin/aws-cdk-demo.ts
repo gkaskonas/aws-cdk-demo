@@ -1,11 +1,14 @@
 #!/usr/bin/env node
-import { App } from '@aws-cdk/core';
-import { WebsitePipelineStack } from '../lib/pipeline';
+import { App } from "aws-cdk-lib";
+import { WebsitePipelineStack } from "../lib/pipeline";
 
 const app = new App();
 
-new WebsitePipelineStack(app, 'nextjsWebsitePipeline', {
-  env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: "eu-west-1" },
+new WebsitePipelineStack(app, "websitePipeline", {
+  env: {
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+    region: process.env.CDK_DEFAULT_REGION,
+  },
 });
 
 app.synth();

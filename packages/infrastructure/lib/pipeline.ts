@@ -1,63 +1,66 @@
-import { ComputeType, LinuxBuildImage } from '@aws-cdk/aws-codebuild';
-import { Construct, Stack, StackProps } from '@aws-cdk/core';
-import { CodePipeline, CodePipelineSource, ShellStep } from "@aws-cdk/pipelines";
-import { AppStage } from './appStage';
+import { Construct } from "constructs";
+import { ComputeType, LinuxBuildImage } from "aws-cdk-lib/aws-codebuild";
+import { Stack, StackProps } from "aws-cdk-lib";
+import { AppStage } from "./appStage";
+import {
+  CodePipeline,
+  CodePipelineSource,
+  ShellStep,
+} from "aws-cdk-lib/pipelines";
 
 /**
  * The stack that defines the application pipeline
  */
 export class WebsitePipelineStack extends Stack {
-    constructor(scope: Construct, id: string, props?: StackProps) {
-        super(scope, id, props);
+  constructor(scope: Construct, id: string, props?: StackProps) {
+    super(scope, id, props);
 
-        const pipeline = new CodePipeline(this, 'Pipeline', {
-            // The pipeline name
-            pipelineName: 'aws-cdk-app',
+    const pipeline = new CodePipeline(this, "Pipeline", {
+      // The pipeline name
+      pipelineName: "aws-cdk-app",
 
-            // How it will be built and synthesized
-            synth: new ShellStep('Synth', {
-                // Where the source can be found
-                input: CodePipelineSource.connection('gkaskonas/aws-cdk-demo', 'main', {
-                    connectionArn: "arn:aws:codestar-connections:eu-west-1:269065460843:connection/a4848827-92c7-4203-b816-81ec422b6c26"
-                }),
+      // How it will be built and synthesized
+      synth: new ShellStep("Synth", {
+        // Where the source can be found
+        input: CodePipelineSource.connection("gkaskonas/aws-cdk-demo", "main", {
+          connectionArn: `arn:aws:codestar-connections:${this.region}:${this.account}}:connection/a4848827-92c7-4203-b816-81ec422b6c26`,
+        }),
 
-                // Install dependencies, build and run cdk synth
-                commands: [
-                    'yarn install',
-                    'yarn build',
-                    'yarn cdk synth'
-                ],
-            }),
-            crossAccountKeys: true,
-            codeBuildDefaults: {
-                buildEnvironment: {
-                    computeType: ComputeType.SMALL,
-                    buildImage: LinuxBuildImage.STANDARD_5_0
-                }
-            }
+        // Install dependencies, build and run cdk synth
+        commands: ["yarn install", "yarn build", "yarn cdk synth"],
+      }),
+      crossAccountKeys: true,
+      codeBuildDefaults: {
+        buildEnvironment: {
+          computeType: ComputeType.SMALL,
+          buildImage: LinuxBuildImage.STANDARD_5_0,
+        },
+      },
+    });
 
-        });
+    // This is where we add the application stages
 
-        // This is where we add the application stages
+    const appDev = new AppStage(this, "dev", {
+      env: {
+        account: process.env.CDK_DEFAULT_ACCOUNT,
+        region: process.env.CDK_DEFAULT_REGION,
+      },
+    });
 
-        const appDev = new AppStage(this, 'dev', {
-            env: { account: "404319983256", region: "eu-west-1" },
-        })
-
-        pipeline.addStage(appDev, {
-            post: [
-                new ShellStep('TestService', {
-                    commands: [
-                        // Use 'curl' to GET the given URL and fail if it returns an error
-                        'curl -Ssf $ENDPOINT_URL/items/1',
-                    ],
-                    envFromCfnOutputs: {
-                        // Get the stack Output from the Stage and make it available in
-                        // the shell script as $ENDPOINT_URL.
-                        ENDPOINT_URL: appDev.urlOutput,
-                    },
-                }),
-            ]
-        });
-    }
+    pipeline.addStage(appDev, {
+      post: [
+        new ShellStep("TestService", {
+          commands: [
+            // Use 'curl' to GET the given URL and fail if it returns an error
+            "curl -Ssf $ENDPOINT_URL/items/1",
+          ],
+          envFromCfnOutputs: {
+            // Get the stack Output from the Stage and make it available in
+            // the shell script as $ENDPOINT_URL.
+            ENDPOINT_URL: appDev.urlOutput,
+          },
+        }),
+      ],
+    });
+  }
 }

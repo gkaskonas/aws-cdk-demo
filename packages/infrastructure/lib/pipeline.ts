@@ -42,14 +42,14 @@ export class WebsitePipelineStack extends Stack {
 
     // This is where we add the application stages
 
-    const appDev = new AppStage(this, "dev", {
+    const appDev = new AppStage(this, "appDev", {
       env: {
         account: process.env.CDK_DEFAULT_ACCOUNT,
         region: process.env.CDK_DEFAULT_REGION,
       },
     });
 
-    const webDev = new WebsiteStage(this, "dev", {
+    const webDev = new WebsiteStage(this, "webDev", {
       env: {
         account: process.env.CDK_DEFAULT_ACCOUNT,
         region: process.env.CDK_DEFAULT_REGION,

@@ -10,7 +10,6 @@
     "watch": "lerna run watch --stream",
     "test": "lerna run test --",
     "cdk": "yarn --cwd packages/infrastructure cdk",
-    "dev": "yarn --cwd packages/application dev",
     "deploy": "yarn build && yarn cdk synth && yarn cdk deploy --require-approval never"
   },
   "workspaces": [

@@ -7,6 +7,7 @@ import {
   CodePipelineSource,
   ShellStep,
 } from "aws-cdk-lib/pipelines";
+import { WebsiteStage } from "./websiteStage";
 
 /**
  * The stack that defines the application pipeline
@@ -48,6 +49,13 @@ export class WebsitePipelineStack extends Stack {
       },
     });
 
+    const webDev = new WebsiteStage(this, "dev", {
+      env: {
+        account: process.env.CDK_DEFAULT_ACCOUNT,
+        region: process.env.CDK_DEFAULT_REGION,
+      },
+    });
+
     pipeline.addStage(appDev, {
       post: [
         new ShellStep("TestService", {
@@ -59,6 +67,22 @@ export class WebsitePipelineStack extends Stack {
             // Get the stack Output from the Stage and make it available in
             // the shell script as $ENDPOINT_URL.
             ENDPOINT_URL: appDev.urlOutput,
+          },
+        }),
+      ],
+    });
+
+    pipeline.addStage(appDev, {
+      post: [
+        new ShellStep("TestWebsite", {
+          commands: [
+            // Use 'curl' to GET the given URL and fail if it returns an error
+            "curl -Ssf $ENDPOINT_URL/items/1",
+          ],
+          envFromCfnOutputs: {
+            // Get the stack Output from the Stage and make it available in
+            // the shell script as $ENDPOINT_URL.
+            ENDPOINT_URL: webDev.urlOutput,
           },
         }),
       ],

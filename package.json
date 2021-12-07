@@ -9,7 +9,7 @@
     "install": "lerna run install",
     "watch": "lerna run watch --stream",
     "test": "lerna run test --",
-    "cdk": "yarn --cwd packages/infrastructure cdk",
+    "cdk": "cdk",
     "deploy": "yarn build && yarn cdk synth && yarn cdk deploy --require-approval never"
   },
   "workspaces": [

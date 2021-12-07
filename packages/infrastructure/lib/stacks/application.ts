@@ -42,7 +42,7 @@ export class ApplicationStack extends Stack {
     const handler = new Function(this, "Lambda", {
       runtime: Runtime.NODEJS_14_X,
       handler: "handler.handler",
-      code: Code.fromAsset(path.resolve(__dirname, "lambda")),
+      code: Code.fromAsset(path.resolve(__dirname, "../lambda")),
       environment: {
         TABLE_ID: table.tableName,
       },

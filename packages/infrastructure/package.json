@@ -34,6 +34,6 @@
     "source-map-support": "0.5.16"
   },
   "resolutions": {
-    "table": "6.7.2"
+    "table": "6.7.5"
   }
 }

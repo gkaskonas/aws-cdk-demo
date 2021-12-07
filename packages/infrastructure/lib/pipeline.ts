@@ -72,7 +72,7 @@ export class WebsitePipelineStack extends Stack {
       ],
     });
 
-    pipeline.addStage(appDev, {
+    pipeline.addStage(webDev, {
       post: [
         new ShellStep("TestWebsite", {
           commands: [

@@ -11,9 +11,9 @@ export class WebsiteStage extends Stage {
   constructor(scope: Construct, id: string, props?: StageProps) {
     super(scope, id, props);
 
-    const service = new WebsiteStack(this, "Website");
+    const website = new WebsiteStack(this, "Website");
 
     // Expose CdkpipelinesDemoStack's output one level higher
-    this.urlOutput = service.urlOutput;
+    this.urlOutput = website.urlOutput;
   }
 }

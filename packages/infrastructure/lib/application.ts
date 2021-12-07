@@ -1,5 +1,5 @@
 import { Code, Function, Runtime } from "aws-cdk-lib/aws-lambda";
-import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as path from "path";
 import {
@@ -34,6 +34,8 @@ export class ApplicationStack extends Stack {
       readCapacity: 1,
       writeCapacity: 1,
       encryption: TableEncryption.AWS_MANAGED,
+      pointInTimeRecovery: true,
+      removalPolicy: RemovalPolicy.DESTROY,
     });
 
     // The Lambda function that contains the functionality

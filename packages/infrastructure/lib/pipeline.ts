@@ -44,15 +44,15 @@ export class WebsitePipelineStack extends Stack {
 
     const appDev = new AppStage(this, "appDev", {
       env: {
-        account: process.env.CDK_DEFAULT_ACCOUNT,
-        region: process.env.CDK_DEFAULT_REGION,
+        account: "404319983256",
+        region: "eu-west-1",
       },
     });
 
     const webDev = new WebsiteStage(this, "webDev", {
       env: {
-        account: process.env.CDK_DEFAULT_ACCOUNT,
-        region: process.env.CDK_DEFAULT_REGION,
+        account: "404319983256",
+        region: "eu-west-1",
       },
     });
 

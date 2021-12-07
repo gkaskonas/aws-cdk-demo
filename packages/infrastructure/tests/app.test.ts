@@ -1,7 +1,7 @@
 import { Template } from "aws-cdk-lib/assertions";
 import { App } from "aws-cdk-lib";
-import { ApplicationStack } from "../lib/application";
-import { WebsiteStack } from "../lib/website";
+import { ApplicationStack } from "../lib/stacks/application";
+import { WebsiteStack } from "../lib/stacks/website";
 
 // example test. To run these tests, uncomment this file along with the
 // example resource in lib/aws-cdk-demo-stack.ts

@@ -1,19 +1,19 @@
 import { CfnOutput, Stage, StageProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { WebsiteStack } from "./website";
+import { ApplicationStack } from "../stacks/application";
 
 /**
  * Deployable unit of web service app
  */
-export class WebsiteStage extends Stage {
+export class AppStage extends Stage {
   public readonly urlOutput: CfnOutput;
 
   constructor(scope: Construct, id: string, props?: StageProps) {
     super(scope, id, props);
 
-    const website = new WebsiteStack(this, "Website");
+    const service = new ApplicationStack(this, "WebService");
 
     // Expose CdkpipelinesDemoStack's output one level higher
-    this.urlOutput = website.urlOutput;
+    this.urlOutput = service.urlOutput;
   }
 }

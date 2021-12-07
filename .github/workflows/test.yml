@@ -2,7 +2,7 @@ name: Test
 
 on:
   push:
-    branch: ["v*"]
+    branch: ["*"]
 
 jobs:
   test:
@@ -10,8 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v2
-        with:
-          node-version: 16
-      - run: yarn install --audit --frozen-lockfile
+      - run: yarn install
       - run: yarn build
       - run: yarn test

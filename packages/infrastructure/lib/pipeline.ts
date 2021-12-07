@@ -62,35 +62,35 @@ export class WebsitePipelineStack extends Stack {
     });
 
     pipeline.addStage(appDev, {
-      // post: [
-      //   new ShellStep("postDeploy", {
-      //     commands: [
-      //       // Use 'curl' to GET the given URL and fail if it returns an error
-      //       "curl -Ssf $ENDPOINT_URL/items/1",
-      //     ],
-      //     envFromCfnOutputs: {
-      //       // Get the stack Output from the Stage and make it available in
-      //       // the shell script as $ENDPOINT_URL.
-      //       ENDPOINT_URL: appDev.urlOutput,
-      //     },
-      //   }),
-      // ],
+      post: [
+        new ShellStep("postDeploy", {
+          commands: [
+            // Use 'curl' to GET the given URL and fail if it returns an error
+            "curl -Ssf $ENDPOINT_URL/items",
+          ],
+          envFromCfnOutputs: {
+            // Get the stack Output from the Stage and make it available in
+            // the shell script as $ENDPOINT_URL.
+            ENDPOINT_URL: appDev.urlOutput,
+          },
+        }),
+      ],
     });
 
     pipeline.addStage(webDev, {
-      // post: [
-      //   new ShellStep("postDeploy", {
-      //     commands: [
-      //       // Use 'curl' to GET the given URL and fail if it returns an error
-      //       "curl -Ssf $ENDPOINT_URL/items/1",
-      //     ],
-      //     envFromCfnOutputs: {
-      //       // Get the stack Output from the Stage and make it available in
-      //       // the shell script as $ENDPOINT_URL.
-      //       ENDPOINT_URL: webDev.urlOutput,
-      //     },
-      //   }),
-      // ],
+      post: [
+        new ShellStep("postDeploy", {
+          commands: [
+            // Use 'curl' to GET the given URL and fail if it returns an error
+            "curl -Ssf $WEBSITE_URL",
+          ],
+          envFromCfnOutputs: {
+            // Get the stack Output from the Stage and make it available in
+            // the shell script as $WEBSITE_URL.
+            WEBSITE_URL: webDev.urlOutput,
+          },
+        }),
+      ],
     });
   }
 }

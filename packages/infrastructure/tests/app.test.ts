@@ -11,7 +11,18 @@ test("DynamoDB Created", () => {
   const stack = new ApplicationStack(app, "MyTestStack");
   // THEN
   const template = Template.fromStack(stack);
-  template.hasResourceProperties("AWS::DynamoDB::Table", {});
+  template.hasResourceProperties("AWS::DynamoDB::Table", {
+    PointInTimeRecoverySpecification: {
+      PointInTimeRecoveryEnabled: true,
+    },
+    SSESpecification: {
+      SSEEnabled: true,
+    },
+    ProvisionedThroughput: {
+      ReadCapacityUnits: 1,
+      WriteCapacityUnits: 1,
+    },
+  });
 });
 
 test("S3 Bucket Created", () => {
@@ -20,5 +31,15 @@ test("S3 Bucket Created", () => {
   const stack = new WebsiteStack(app, "MyTestStack");
   // THEN
   const template = Template.fromStack(stack);
-  template.hasResourceProperties("AWS::S3::Bucket", {});
+  template.hasResourceProperties("AWS::S3::Bucket", {
+    BucketEncryption: {
+      ServerSideEncryptionConfiguration: [
+        {
+          ServerSideEncryptionByDefault: {
+            SSEAlgorithm: "AES256",
+          },
+        },
+      ],
+    },
+  });
 });

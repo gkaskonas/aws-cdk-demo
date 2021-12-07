@@ -1,6 +1,5 @@
 import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
-import * as path from "path";
 import { Bucket, BucketEncryption } from "aws-cdk-lib/aws-s3";
 import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 
@@ -25,7 +24,7 @@ export class WebsiteStack extends Stack {
 
     new BucketDeployment(this, "bucketDeployment", {
       destinationBucket: bucket,
-      sources: [Source.asset(path.resolve(__dirname, "../application/public"))],
+      sources: [Source.asset("../application/public")],
     });
 
     this.urlOutput = new CfnOutput(this, "Url", {

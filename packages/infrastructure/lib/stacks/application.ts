@@ -14,6 +14,25 @@ import {
 } from "aws-cdk-lib/aws-apigateway";
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
 
+function setTableAutoScaling(table: Table): void {
+  const readScaling = table.autoScaleReadCapacity({
+    minCapacity: 1,
+    maxCapacity: 5,
+  });
+
+  readScaling.scaleOnUtilization({
+    targetUtilizationPercent: 75,
+  });
+
+  const writeScaling = table.autoScaleReadCapacity({
+    minCapacity: 1,
+    maxCapacity: 5,
+  });
+
+  writeScaling.scaleOnUtilization({
+    targetUtilizationPercent: 75,
+  });
+}
 /**
  * A stack for our simple Lambda-powered web service
  */
@@ -37,6 +56,8 @@ export class ApplicationStack extends Stack {
       pointInTimeRecovery: true,
       removalPolicy: RemovalPolicy.DESTROY,
     });
+
+    setTableAutoScaling(table);
 
     // The Lambda function that contains the functionality
     const handler = new Function(this, "Lambda", {

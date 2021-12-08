@@ -5869,10 +5869,10 @@ constant-case@^2.0.0:
     snake-case "^2.1.0"
     upper-case "^1.1.1"
 
-constructs@10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.0.0.tgz#a6d498540111f6d75663711d0fa65f32fc8f1786"
-  integrity sha512-MIwjmrXZpM9RtwyrSD4HotDIQl8HTdIefQhU+MU1asvtSyVN3kK8kjeUOWMFb+fdyT4RX3QvvcaaPBluLEX1SA==
+constructs@10.0.10:
+  version "10.0.10"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.0.10.tgz#ab0dfcecfb7f10419c512cd3f5b809ef034882cc"
+  integrity sha512-lQqY39wuQksXfm63rxcplif8CpW7ZuGWqQNGG/qoxfVeBjG4DWpCzD3K3pVukRCe+EhvsIvLpZxfL6SKLAfvlw==
 
 content-disposition@0.5.3:
   version "0.5.3"

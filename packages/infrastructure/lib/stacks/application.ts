@@ -23,15 +23,6 @@ function setTableAutoScaling(table: Table): void {
   readScaling.scaleOnUtilization({
     targetUtilizationPercent: 75,
   });
-
-  const writeScaling = table.autoScaleReadCapacity({
-    minCapacity: 1,
-    maxCapacity: 5,
-  });
-
-  writeScaling.scaleOnUtilization({
-    targetUtilizationPercent: 75,
-  });
 }
 /**
  * A stack for our simple Lambda-powered web service

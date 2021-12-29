@@ -9,8 +9,11 @@ import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 import {
   CloudFrontWebDistribution,
   OriginAccessIdentity,
+  ViewerCertificate,
   ViewerProtocolPolicy,
 } from "aws-cdk-lib/aws-cloudfront";
+import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
+import { CloudFrontCertificates } from "../utils/environments";
 
 /**
  * A stack for our simple Lambda-powered web service
@@ -32,6 +35,8 @@ export class WebsiteStack extends Stack {
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
     });
 
+    const certificate = Certificate.fromCertificateArn(this, "cert", CloudFrontCertificates.PROD)
+
     const distro = new CloudFrontWebDistribution(this, "distro", {
       originConfigs: [
         {
@@ -46,8 +51,9 @@ export class WebsiteStack extends Stack {
             },
           ],
         },
+        
       ],
-    });
+    viewerCertificate: ViewerCertificate.fromAcmCertificate(certificate)});
 
     new BucketDeployment(this, "bucketDeployment", {
       destinationBucket: bucket,

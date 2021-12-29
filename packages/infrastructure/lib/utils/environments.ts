@@ -6,3 +6,7 @@ export enum TargetAccounts {
 export enum TargetRegions {
   EUROPE = "eu-west-1",
 }
+
+export enum CloudFrontCertificates {
+  PROD = "arn:aws:acm:us-east-1:119184259962:certificate/f0dca187-ff36-46bf-a19d-d9bbffc3d392"
+}

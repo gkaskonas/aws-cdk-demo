@@ -9,6 +9,8 @@ import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 import {
   CloudFrontWebDistribution,
   OriginAccessIdentity,
+  SecurityPolicyProtocol,
+  SSLMethod,
   ViewerCertificate,
   ViewerProtocolPolicy,
 } from "aws-cdk-lib/aws-cloudfront";
@@ -37,9 +39,12 @@ export class WebsiteStack extends Stack {
 
     const certArn = TargetAccounts.DEV ? CloudFrontCertificates.DEV : CloudFrontCertificates.PROD
 
+    const alias = TargetAccounts.DEV ? "dev.peterkaskonas.com" : "peterkaskonas.com"
+
     const certificate = Certificate.fromCertificateArn(this, "cert", certArn)
 
     const distro = new CloudFrontWebDistribution(this, "distro", {
+
       originConfigs: [
         {
           s3OriginSource: {
@@ -53,9 +58,14 @@ export class WebsiteStack extends Stack {
             },
           ],
         },
-        
+
       ],
-    viewerCertificate: ViewerCertificate.fromAcmCertificate(certificate)});
+      viewerCertificate: ViewerCertificate.fromAcmCertificate(certificate, {
+        aliases: [alias],
+        securityPolicy: SecurityPolicyProtocol.TLS_V1_2_2021,
+        sslMethod: SSLMethod.SNI
+      })
+    });
 
     new BucketDeployment(this, "bucketDeployment", {
       destinationBucket: bucket,

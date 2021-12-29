@@ -1,10 +1,7 @@
-# Basic Rest API deployed using AWS CDK v2
+# Personal website and API + Pipeline with AWS CDK
 
-## Useful commands
+This Repo contains all the code for my personal website written in ReactJS and deployed using AWS CDK
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+## Requires Lerna and Yarn
+
+yarn dev to start testing

@@ -35,7 +35,9 @@ export class WebsiteStack extends Stack {
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
     });
 
-    const certificate = Certificate.fromCertificateArn(this, "cert", CloudFrontCertificates.PROD)
+    const certArn = TargetAccounts.DEV ? CloudFrontCertificates.DEV : CloudFrontCertificates.PROD
+
+    const certificate = Certificate.fromCertificateArn(this, "cert", certArn)
 
     const distro = new CloudFrontWebDistribution(this, "distro", {
       originConfigs: [
@@ -53,7 +55,7 @@ export class WebsiteStack extends Stack {
         },
         
       ],
-    viewerCertificate: this.account == TargetAccounts.PROD ? ViewerCertificate.fromAcmCertificate(certificate) : undefined});
+    viewerCertificate: ViewerCertificate.fromAcmCertificate(certificate)});
 
     new BucketDeployment(this, "bucketDeployment", {
       destinationBucket: bucket,

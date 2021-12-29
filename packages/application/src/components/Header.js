@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 export default class Header extends Component {
   render() {
@@ -30,7 +31,7 @@ export default class Header extends Component {
                     resumeData.socialLinks && resumeData.socialLinks.map(item =>{
                       return(
                               <li key={item.name}>
-                                <a href={item.url} target="_blank"><i className={item.className}></i></a>
+                                <a href={item.url} target="_blank" rel="noreferrer"><i className={item.className}></i></a>
                               </li>
                             )
                           }

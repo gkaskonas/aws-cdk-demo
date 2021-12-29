@@ -6,3 +6,5 @@ node_modules
 .cdk.staging
 cdk.out
 body.json
+packages/application/build
+packages/infrastructure/**/*.js

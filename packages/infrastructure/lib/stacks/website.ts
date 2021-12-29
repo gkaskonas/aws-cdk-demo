@@ -51,7 +51,7 @@ export class WebsiteStack extends Stack {
 
     new BucketDeployment(this, "bucketDeployment", {
       destinationBucket: bucket,
-      sources: [Source.asset("../application/public")],
+      sources: [Source.asset("../application/build")],
       distribution: distro,
     });
 

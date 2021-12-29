@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-cdk",
+  "name": "resume-cdk",
   "version": "0.1.0",
   "license": "MIT",
   "private": true,
@@ -11,7 +11,7 @@
     "test": "lerna run test --",
     "cdk": "yarn --cwd packages/infrastructure cdk",
     "deploy": "yarn build && yarn cdk synth && yarn cdk deploy --require-approval never",
-    "gatsby": "yarn --cwd packages/application gatsby"
+    "dev": "yarn --cwd packages/application dev"
   },
   "workspaces": [
     "packages/*"

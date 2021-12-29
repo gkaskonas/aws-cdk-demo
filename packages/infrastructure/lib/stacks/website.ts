@@ -37,9 +37,9 @@ export class WebsiteStack extends Stack {
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
     });
 
-    const certArn = TargetAccounts.DEV ? CloudFrontCertificates.DEV : CloudFrontCertificates.PROD
+    const certArn = this.account === TargetAccounts.DEV ? CloudFrontCertificates.DEV : CloudFrontCertificates.PROD
 
-    const alias = TargetAccounts.DEV ? "dev.peterkaskonas.com" : "peterkaskonas.com"
+    const alias = this.account === TargetAccounts.DEV ? "dev.peterkaskonas.com" : "peterkaskonas.com"
 
     const certificate = Certificate.fromCertificateArn(this, "cert", certArn)
 

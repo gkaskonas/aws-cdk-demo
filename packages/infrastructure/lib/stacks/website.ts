@@ -13,7 +13,7 @@ import {
   ViewerProtocolPolicy,
 } from "aws-cdk-lib/aws-cloudfront";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
-import { CloudFrontCertificates } from "../utils/environments";
+import { CloudFrontCertificates, TargetAccounts } from "../utils/environments";
 
 /**
  * A stack for our simple Lambda-powered web service
@@ -53,7 +53,7 @@ export class WebsiteStack extends Stack {
         },
         
       ],
-    viewerCertificate: ViewerCertificate.fromAcmCertificate(certificate)});
+    viewerCertificate: this.account == TargetAccounts.PROD ? ViewerCertificate.fromAcmCertificate(certificate) : undefined});
 
     new BucketDeployment(this, "bucketDeployment", {
       destinationBucket: bucket,

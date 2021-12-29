@@ -5,6 +5,7 @@ import { AppStage } from "./stages/appStage";
 import {
   CodePipeline,
   CodePipelineSource,
+  ManualApprovalStep,
   ShellStep,
 } from "aws-cdk-lib/pipelines";
 import { WebsiteStage } from "./stages/websiteStage";
@@ -100,6 +101,9 @@ export class WebsitePipelineStack extends Stack {
       ],
     });
     pipeline.addStage(webProd, {
+      pre: [
+        new ManualApprovalStep("PromoteToProd")
+      ],
       post: [
         new ShellStep("postDeploy", {
           commands: [
@@ -109,7 +113,7 @@ export class WebsitePipelineStack extends Stack {
           envFromCfnOutputs: {
             // Get the stack Output from the Stage and make it available in
             // the shell script as $WEBSITE_URL.
-            WEBSITE_URL: webDev.urlOutput,
+            WEBSITE_URL: webProd.urlOutput,
           },
         }),
       ],

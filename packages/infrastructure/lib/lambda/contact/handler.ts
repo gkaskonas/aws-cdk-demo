@@ -36,10 +36,10 @@ async function sendEmail({
   email,
   message,
 }: ContactDetails): Promise<APIGatewayProxyResultV2> {
-  const SES_REGION  = process.env.REGION 
+  const SES_REGION  = process.env.SES_REGION 
   if (!SES_REGION) {
     throw new Error(
-      'Please add the SES_EMAIL_TO, SES_EMAIL_FROM and SES_REGION environment variables in an env.js file located in the root directory',
+      'Please add the SES_REGION Environment Variable',
     );
   }
   const ses = new AWS.SES({region: SES_REGION});
@@ -55,7 +55,7 @@ function sendEmailParams({name, email, message}: ContactDetails) {
   const EMAIL  = process.env.EMAIL 
   if (!EMAIL) {
     throw new Error(
-      'Please add the SES_EMAIL_TO, SES_EMAIL_FROM and SES_REGION environment variables in an env.js file located in the root directory',
+      'Please add Email env variable',
     );
   }
   return {
@@ -75,7 +75,7 @@ function sendEmailParams({name, email, message}: ContactDetails) {
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: `Email from example ses app.`,
+        Data: `Contact from personal website.`,
       },
     },
     Source: EMAIL,

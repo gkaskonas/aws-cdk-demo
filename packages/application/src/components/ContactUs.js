@@ -5,7 +5,7 @@ export default class ContactUs extends Component {
     this.state = {
       name: '',
       email: '',
-      content: ''
+      message: ''
     }
   }
   render() {
@@ -38,8 +38,8 @@ export default class ContactUs extends Component {
             <input type="email" className="form-control" aria-describedby="emailHelp" value={this.state.email} onChange={this.onEmailChange.bind(this)} />
           </div>
           <div className="form-group">
-            <label htmlFor="content"></label>
-            <textarea className="form-control" rows="5" value={this.state.content} onChange={this.onContentChange.bind(this)} />
+            <label htmlFor="message"></label>
+            <textarea className="form-control" rows="5" value={this.state.message} onChange={this.onMessageChange.bind(this)} />
           </div>
           <button type="submit" className="btn btn-primary">Submit</button>
         </form></div>
@@ -54,18 +54,19 @@ export default class ContactUs extends Component {
     this.setState({email: event.target.value})
   }
 
-  onContentChange(event) {
-    this.setState({content: event.target.value})
+  onMessageChange(event) {
+    this.setState({message: event.target.value})
   }
 
   resetForm(){
-    this.setState({name: "", email: "", content: ""})
+    this.setState({name: "", email: "", message: ""})
   }
 
   handleSubmit(e) {
     e.preventDefault();
     
-    fetch('https://v1bpq5bf2c.execute-api.eu-west-1.amazonaws.com/prod/submit', {
+    const apiUrl = process.env.REACT_APP_API_URL
+    fetch(`${apiUrl}/submit`, {
         method: "POST",
         body: JSON.stringify(this.state),
         headers: {

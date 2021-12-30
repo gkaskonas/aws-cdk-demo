@@ -28,8 +28,8 @@ export class ContactFormStack extends Stack {
       handler: "handler.send",
       code: Code.fromAsset(path.resolve(__dirname, "../lambda/contact/")),
       environment: {
-        EMAIL: "contact@peterkaskonas.com",
-        DOMAIN: "peterkaskonas.com"
+        EMAIL: "ws-access.qzrcx@aleeas.com",
+        SES_REGION: this.region
       },
       logRetention: RetentionDays.TWO_WEEKS,
       initialPolicy: [new PolicyStatement({

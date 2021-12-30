@@ -858,6 +858,14 @@ call-to-action .button {
 	float: left;
    width: 26%;
 }
+
+#contact input.form-control {
+   width: 25%;
+}
+
+#contact textarea.form-control {
+   width: 25%;
+}
 #contact input,
 #contact textarea,
 #contact select {
@@ -875,12 +883,12 @@ call-to-action .button {
 #contact textarea:focus,
 #contact select:focus {
 	color: #fff;
-	background-color: #11ABB0;
+	background-color: #282c2c;
 }
 #contact button.submit {
 	letter-spacing: 3px;
 	color:#fff;
-   background: #777373;
+   background: #221f1f;
 	border: none;
    cursor: pointer;
    height: auto;

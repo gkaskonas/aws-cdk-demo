@@ -25,7 +25,7 @@ export class ContactFormStack extends Stack {
     // The Lambda function that contains the functionality
     const handler = new Function(this, "Lambda", {
       runtime: Runtime.NODEJS_14_X,
-      handler: "handler.send",
+      handler: "handler.main",
       code: Code.fromAsset(path.resolve(__dirname, "../lambda/contact/")),
       environment: {
         EMAIL: "ws-access.qzrcx@aleeas.com",

@@ -4,7 +4,7 @@ import { WebsitePipelineStack } from "../lib/pipeline";
 
 const app = new App();
 
-new WebsitePipelineStack(app, "websitePipeline", {
+new WebsitePipelineStack(app, "portfolioPipeline", {
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,

@@ -14,13 +14,22 @@ import { TargetAccounts, TargetRegions } from "./utils/environments";
  * The stack that defines the application pipeline
  */
 
-function getPipeline(scope: Stack, synthStep: ShellStep): CodePipeline {
+function getPipeline(scope: Stack): CodePipeline {
   return new CodePipeline(scope, "Pipeline", {
     // The pipeline name
-    pipelineName: "aws-cdk-app",
+    pipelineName: "portfolio-pipeline",
 
     // How it will be built and synthesized
-    synth: synthStep,
+    synth: new ShellStep("Synth", {
+      // Where the source can be found
+      input: CodePipelineSource.connection("gkaskonas/aws-cdk-demo", "main", {
+        connectionArn: `arn:aws:codestar-connections:${scope.region}:${scope.account}:connection/a4848827-92c7-4203-b816-81ec422b6c26`,
+      }),
+
+      // Install dependencies, build and run cdk synth
+      commands: ["yarn install", "yarn build", "yarn cdk synth"],
+      primaryOutputDirectory: "packages/infrastructure/cdk.out",
+    }),
     crossAccountKeys: true,
     codeBuildDefaults: {
       buildEnvironment: {
@@ -51,30 +60,10 @@ export class WebsitePipelineStack extends Stack {
       },
     });
 
-    const synthStep = new ShellStep("Synth", {
-      // Where the source can be found
-      input: CodePipelineSource.connection("gkaskonas/aws-cdk-demo", "main", {
-        connectionArn: `arn:aws:codestar-connections:${this.region}:${this.account}:connection/a4848827-92c7-4203-b816-81ec422b6c26`,
-      }),
-
-      // Install dependencies, build and run cdk synth
-      commands: ["yarn install", "yarn build", "yarn cdk synth"],
-      primaryOutputDirectory: "packages/infrastructure/cdk.out",
-    })
-
-    const pipeline = getPipeline(this, synthStep);
+    const pipeline = getPipeline(this);
 
 
     pipeline.addStage(webDev, {
-      pre: [
-        new ShellStep("buildDev", {
-          input: synthStep,
-          commands: ["yarn install", "yarn build"],
-          envFromCfnOutputs: {
-            REACT_APP_API_URL: webDev.contactFormUrl
-          }
-        })
-      ],
       post: [
         new ShellStep("postDeploy", {
           commands: [
@@ -87,18 +76,11 @@ export class WebsitePipelineStack extends Stack {
             WEBSITE_URL: webDev.urlOutput,
           },
         }),
-        new ManualApprovalStep("PromoteToProd"),
       ],
     });
     pipeline.addStage(webProd, {
       pre: [
-        new ShellStep("buildProd", {
-          input: synthStep,
-          commands: ["yarn install", "yarn build"],
-          envFromCfnOutputs: {
-            REACT_APP_API_URL: webProd.contactFormUrl
-          }
-        })
+        new ManualApprovalStep("PromoteToProd"),
       ],
       post: [
         new ShellStep("postDeploy", {

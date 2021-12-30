@@ -7,3 +7,4 @@ node_modules
 cdk.out
 body.json
 packages/application/build
+packages/infrastructure/**/*.js

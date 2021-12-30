@@ -2,7 +2,7 @@
   "name": "infrastructure",
   "version": "0.1.0",
   "bin": {
-    "infrastructure": "bin/aws-cdk-demo.js"
+    "infrastructure": "bin/portfolio-website.js"
   },
   "scripts": {
     "build": "tsc --build",

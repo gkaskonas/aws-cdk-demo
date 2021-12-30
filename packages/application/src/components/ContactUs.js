@@ -65,7 +65,7 @@ export default class ContactUs extends Component {
   handleSubmit(e) {
     e.preventDefault();
     
-    const apiUrl = process.env.REACT_APP_API_URL
+    const apiUrl = "https://axv8xnp8me.execute-api.eu-west-1.amazonaws.com/prod"
     fetch(`${apiUrl}/submit`, {
         method: "POST",
         body: JSON.stringify(this.state),

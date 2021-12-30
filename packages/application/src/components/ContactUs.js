@@ -65,8 +65,7 @@ export default class ContactUs extends Component {
   handleSubmit(e) {
     e.preventDefault();
     
-    const apiEndpoint = process.env.REACT_APP_API_ENDPOINT
-    fetch(`${apiEndpoint}/submit`, {
+    fetch('https://v1bpq5bf2c.execute-api.eu-west-1.amazonaws.com/prod/submit', {
         method: "POST",
         body: JSON.stringify(this.state),
         headers: {

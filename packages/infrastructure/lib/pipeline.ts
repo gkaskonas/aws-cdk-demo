@@ -1,6 +1,6 @@
 import { Construct } from "constructs";
 import { ComputeType, LinuxBuildImage } from "aws-cdk-lib/aws-codebuild";
-import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
+import { Stack, StackProps } from "aws-cdk-lib";
 import {
   CodePipeline,
   CodePipelineSource,
@@ -14,7 +14,7 @@ import { TargetAccounts, TargetRegions } from "./utils/environments";
  * The stack that defines the application pipeline
  */
 
-function getPipeline(scope: Stack, apiEndpoint: CfnOutput): CodePipeline {
+function getPipeline(scope: Stack): CodePipeline {
   return new CodePipeline(scope, "Pipeline", {
     // The pipeline name
     pipelineName: "aws-cdk-app",
@@ -29,9 +29,6 @@ function getPipeline(scope: Stack, apiEndpoint: CfnOutput): CodePipeline {
       // Install dependencies, build and run cdk synth
       commands: ["yarn install", "yarn build", "yarn cdk synth"],
       primaryOutputDirectory: "packages/infrastructure/cdk.out",
-      envFromCfnOutputs: {
-        "REACT_APP_API_ENDPOINT": apiEndpoint
-      }
     }),
     crossAccountKeys: true,
     codeBuildDefaults: {
@@ -63,7 +60,7 @@ export class WebsitePipelineStack extends Stack {
       },
     });
 
-    const pipeline = getPipeline(this, webDev.contactFormUrl);
+    const pipeline = getPipeline(this);
 
 
     pipeline.addStage(webDev, {

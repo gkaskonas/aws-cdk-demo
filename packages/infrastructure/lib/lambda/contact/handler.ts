@@ -1,7 +1,8 @@
-import { APIGatewayEvent } from "aws-lambda"
+import { APIGatewayProxyEvent } from "aws-lambda"
 
-const aws = require('aws-sdk')
-const ses = new aws.SES()
+import aws from 'aws-sdk'
+import { SendEmailRequest } from "aws-sdk/clients/sesv2"
+const ses = new aws.SESV2()
 const myEmail = process.env.EMAIL
 const myDomain = process.env.DOMAIN
 
@@ -30,18 +31,21 @@ function generateError (code: number, err: any) {
   }
 }
 
-function generateEmailParams (body: string) {
+function generateEmailParams (body: string): SendEmailRequest {
   const { email, name, content } = JSON.parse(body)
   console.log(email, name, content)
   if (!(email && name && content)) {
     throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'content\'.')
   }
 
+  if (!myEmail) throw new Error("Missing myEmail!")
+
   return {
-    Source: myEmail,
+    FromEmailAddress: myEmail,
     Destination: { ToAddresses: [myEmail] },
     ReplyToAddresses: [email],
-    Message: {
+    Content: {
+      Simple: {
       Body: {
         Text: {
           Charset: 'UTF-8',
@@ -54,9 +58,10 @@ function generateEmailParams (body: string) {
       }
     }
   }
+  }
 }
 
-module.exports.send = async (event: APIGatewayEvent) => {
+module.exports.send = async (event: APIGatewayProxyEvent) => {
   try {
     if (!event.body) throw new Error("No body!")
     const emailParams = generateEmailParams(event.body)

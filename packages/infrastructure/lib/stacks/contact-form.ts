@@ -8,7 +8,6 @@ import {
   LambdaRestApi,
 } from "aws-cdk-lib/aws-apigateway";
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
-import { TargetRegions } from "../utils/environments";
 import { PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 /**
@@ -26,13 +25,11 @@ export class ContactFormStack extends Stack {
     // The Lambda function that contains the functionality
     const handler = new Function(this, "Lambda", {
       runtime: Runtime.NODEJS_14_X,
-      handler: "handler.handle",
+      handler: "handler.send",
       code: Code.fromAsset(path.resolve(__dirname, "../lambda/contact/")),
       environment: {
-        SES_REGION: TargetRegions.EUROPE,
-        FROM_NAME: "Peter Kaskonas",
-        FROM_EMAIL: "contact@peterkaskonas.com",
-        TO_EMAIL: "pkpersonal@protonmail.com"
+        EMAIL: "contact@peterkaskonas.com",
+        DOMAIN: "peterkaskonas.com"
       },
       logRetention: RetentionDays.TWO_WEEKS,
       initialPolicy: [new PolicyStatement({

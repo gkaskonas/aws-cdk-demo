@@ -1,11 +1,14 @@
 import {APIGatewayProxyEventV2, APIGatewayProxyResultV2} from 'aws-lambda';
 import AWS from 'aws-sdk';
+import { SendEmailRequest } from 'aws-sdk/clients/ses';
 
 export type ContactDetails = {
   name: string;
   email: string;
   message: string;
 };
+
+const DOMAIN  = process.env.DOMAIN 
 
 export async function main(
   event: APIGatewayProxyEventV2,
@@ -27,6 +30,11 @@ export async function main(
     return JSON.stringify({
       body: {error: JSON.stringify(error)},
       statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': DOMAIN,
+        'Access-Control-Allow-Headers': 'x-requested-with',
+        'Access-Control-Allow-Credentials': true
+      },
     });
   }
 }
@@ -48,10 +56,15 @@ async function sendEmail({
   return JSON.stringify({
     body: {message: 'Email sent successfully 🎉🎉🎉'},
     statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': DOMAIN,
+      'Access-Control-Allow-Headers': 'x-requested-with',
+      'Access-Control-Allow-Credentials': true
+    },
   });
 }
 
-function sendEmailParams({name, email, message}: ContactDetails) {
+function sendEmailParams({name, email, message}: ContactDetails): SendEmailRequest {
   const EMAIL  = process.env.EMAIL 
   if (!EMAIL) {
     throw new Error(
@@ -59,6 +72,7 @@ function sendEmailParams({name, email, message}: ContactDetails) {
     );
   }
   return {
+    ReplyToAddresses: [email],
     Destination: {
       ToAddresses: [EMAIL],
     },

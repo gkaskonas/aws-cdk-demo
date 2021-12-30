@@ -29,7 +29,8 @@ export class ContactFormStack extends Stack {
       code: Code.fromAsset(path.resolve(__dirname, "../lambda/contact/")),
       environment: {
         EMAIL: "aws-access.qzrcx@aleeas.com",
-        SES_REGION: this.region
+        SES_REGION: this.region,
+        DOMAIN: "peterkaskonas.com"
       },
       logRetention: RetentionDays.TWO_WEEKS,
       initialPolicy: [new PolicyStatement({

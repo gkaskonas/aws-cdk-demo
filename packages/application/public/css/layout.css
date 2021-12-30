@@ -809,7 +809,7 @@ call-to-action .button {
 #contact .section-head { margin-bottom: 42px; }
 
 #contact a, #contact a:visited  { color: #959e9e; }
-#contact a:hover, #contact a:focus { color: #00CCCC; }
+#contact a:hover, #contact a:focus { color: #889191; }
 
 #contact h1 {
    font: 18px/24px 'opensans-bold', sans-serif;
@@ -853,6 +853,7 @@ call-to-action .button {
    font: 15px/24px 'opensans-bold', sans-serif;
    margin: 12px 0;
    color: #EBEEEE;
+   padding-left: 400px;
 	display: inline-block;
 	float: left;
    width: 26%;
@@ -877,23 +878,23 @@ call-to-action .button {
 	background-color: #11ABB0;
 }
 #contact button.submit {
-	text-transform: uppercase;
 	letter-spacing: 3px;
 	color:#fff;
-   background: #0D0D0D;
+   background: #777373;
 	border: none;
    cursor: pointer;
    height: auto;
    display: inline-block;
 	border-radius: 3px;
    margin-left: 26%;
+   
 }
 #contact button.submit:hover {
 	color: #0D0D0D;
 	background: #fff;
 }
 #contact span.required {
-	color: #11ABB0;
+	color: #80898a;
 	font-size: 13px;
 }
 #message-warning, #message-success {

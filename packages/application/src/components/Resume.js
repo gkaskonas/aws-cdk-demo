@@ -19,8 +19,9 @@ export default  class Resume extends Component {
                        <div className="twelve columns">
                           <h3>{item.UniversityName}</h3>
                           <p className="info">
+                          <span>&bull;</span> 
                           {item.specialization}
-                          <span>&bull;</span> <em className="date">
+                          <em className="date">
                             <br></br>
                             Graduated: {item.MonthOfPassing} {item.YearOfPassing}</em></p>
                           <p>
@@ -46,17 +47,12 @@ export default  class Resume extends Component {
                        <div className="twelve columns">
                           <h3>{item.CompanyName}</h3>
                           <p className="info">
+                          <span>&bull;</span>
                           {item.specialization}
-                          <span>&bull;</span> <em className="date">
-                          <br></br>
-                          Started: {item.started}
+                          <em className="date">
                           <br></br>
                           Finished: {item.MonthOfLeaving} {item.YearOfLeaving}</em></p>
-                          <p>
-                          {item.Achievements}
-                          </p>
                        </div>
-
                     </div>
 
                   )
@@ -75,12 +71,11 @@ export default  class Resume extends Component {
                   return(
                     <div className="row item">
                        <div className="twelve columns">
-                          <h3>{item.name}</h3>
-                          <p className="info">
-                          Start: {item.start}
-                          <br></br>
-                          Expires: {item.end}
-                          </p>
+                       <p className="info">
+                          <h5>{item.name}</h5>
+                          <em className="date">
+                            Expires: {item.end}
+                          </em></p>
                        </div>
 
                     </div>
@@ -98,10 +93,6 @@ export default  class Resume extends Component {
             </div>
 
             <div className="nine columns main-col">
-
-               <p>
-               {resumeData.skillsDescription}
-               </p>
 
    				<div className="bars">
 

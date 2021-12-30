@@ -16,7 +16,9 @@ let resumeData = {
           "className":"fa fa-github"
         }
       ],
-    "aboutme":"I am a Senior DevOps Engineer at Deepcrawl.",
+    // eslint-disable-next-line no-multi-str
+    "aboutme":"Certified AWS Solutions Architect with excellent communication and problem-solving skills. \
+               3+ years of experience in AWS environment, from deploying software solutions on existing infrastructure to building new, multi account Landing Zones. Everything from early discussions to deploying and maintaining complex applications on the cloud.",
     "address":"United Kingdom",
     "website":"https://peterkaskonas.com",
     "education":[
@@ -43,6 +45,14 @@ let resumeData = {
         "started": "Sep 2020",
         "MonthOfLeaving":"July",
         "YearOfLeaving":"2021",
+        "Achievements":""
+      },
+      {
+        "CompanyName":"Ocado",
+        "specialization":"Devops Engineer",
+        "started": "Sep 2019",
+        "MonthOfLeaving":"Sep",
+        "YearOfLeaving":"2020",
         "Achievements":""
       }
     ],
@@ -83,10 +93,12 @@ let resumeData = {
         "end": "Sep 2024"
       },
     ],
-    "skillsDescription":"Cloud Computing",
     "skills":[
       {
         "skillname":"AWS"
+      },
+      {
+        "skillname":"Kubernetes"
       },
       {
         "skillname":"Python"
@@ -95,16 +107,13 @@ let resumeData = {
         "skillname":"Typescript"
       }
     ],
-    "portfolio":[
-      
-    ],
     "testimonials":[
       {
-        "name": "Paul Andrews",
+        "name": "Paul Andrews | Senior Solutions Architect at Amazon Web Services (AWS)",
         "description": "He is a phenomenal talent and regularly produces high quality work that 2 or 3 people would struggle to reproduce."
       },
       {
-        "name": "Mario Paphitis",
+        "name": "Mario Paphitis | Engineering Manager at Ocado Technology",
         "description": "A self-motivated, ambitious and intelligent young man. These skills allowed him to solve complex problems and engineer solutions at pace, without compromising on quality."
       }
     ]

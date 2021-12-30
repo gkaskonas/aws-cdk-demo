@@ -24,6 +24,10 @@
 
 body { background: #0f0f0f; }
 
+:root {
+   --black: #161415
+}
+
 /* ------------------------------------------------------------------ */
 /* b. Header Styles
 /* ------------------------------------------------------------------ */
@@ -33,7 +37,7 @@ header {
    height: 800px;
    min-height: 500px;
    width: 100%;
-   background: #161415 url(../images/header-background.jpg) no-repeat top center;
+   background: var(--black) url(../images/header3.jpg) no-repeat top center;
    background-size: cover !important;
 	-webkit-background-size: cover !important;
    text-align: center;
@@ -52,7 +56,7 @@ header .banner {
    vertical-align: middle;
    margin: 0 auto;
    width: 85%;
-   padding-bottom: 30px;s
+   padding-bottom: 30px;
    text-align: center;
 }
 
@@ -187,7 +191,7 @@ ul#nav li.current a { color: #F06000; }
 /* ------------------------------------------------------------------ */
 
 #about {
-   background: #2B2B2B;
+   background:  var(--black);
    padding-top: 96px;
    padding-bottom: 66px;
    overflow: hidden;
@@ -203,13 +207,12 @@ ul#nav li.current a { color: #F06000; }
 }
 #about p {
    line-height: 30px;
-   color: #7A7A7A;
+   color: #c2c2c2;
 }
-#about .profile-pic {
-   position: relative;
-   width: 120px;
-   height: 120px;
-   border-radius: 100%;
+
+#about a {
+   line-height: 30px;
+   color: #c2c2c2;
 }
 #about .contact-details { width: 41.66667%; }
 #about .download {
@@ -258,17 +261,21 @@ ul#nav li.current a { color: #F06000; }
    font: 25px/30px 'opensans-bold', sans-serif;
 }
 
+#resume h5 {
+   font: 18px/10px 'opensans-bold', sans-serif;
+}
+
 #resume .header-col { padding-top: 9px; }
 #resume .main-col { padding-right: 10%; }
 
 .education, .work {
-   margin-bottom: 48px;
-   padding-bottom: 24px;
+   margin-bottom: 32px;
+   padding-bottom: 20px;
    border-bottom: 1px solid #E8E8E8;
 }
 #resume .info {
    font: 16px/24px 'librebaskerville-italic', serif;
-   color: #6E7881;
+   color: #35373a;
    margin-bottom: 18px;
    margin-top: 9px;
 }
@@ -277,8 +284,8 @@ ul#nav li.current a { color: #F06000; }
    margin-left: 5px;
 }
 #resume .date {
-   font: 15px/24px 'opensans-regular', sans-serif;
-   margin-top: 6px;
+   font: 13px/24px 'opensans-regular', sans-serif;
+   margin-top: 2px;
 }
 
 /*----------------------------------------------*/
@@ -329,40 +336,46 @@ ul#nav li.current a { color: #F06000; }
   	width: 60%;
   	-moz-animation: typescript 2s ease;
   	-webkit-animation: typescript 2s ease;
+  	animation: typescript 2s ease;
 }
-.illustrator {
-  	width: 55%;
-  	-moz-animation: illustrator 2s ease;
-  	-webkit-animation: illustrator 2s ease;
+.kubernetes {
+  	width: 90%;
+  	-moz-animation: kubernetes 2s ease;
+  	-webkit-animation: kubernetes 2s ease;
+  	animation: kubernetes 2s ease;
 }
 .wordpress {
   	width: 50%;
   	-moz-animation: wordpress 2s ease;
   	-webkit-animation: wordpress 2s ease;
+   animation: wordpress 2s ease;
 }
 .python {
   	width: 75%;
   	-moz-animation: python 2s ease;
   	-webkit-animation: python 2s ease;
+   animation: python 2s ease;
 }
 .aws {
   	width: 95%;
   	-moz-animation: aws 2s ease;
   	-webkit-animation: aws 2s ease;
+   animation: aws 2s ease;
 }
 .jquery {
   	width: 50%;
   	-moz-animation: jquery 2s ease;
   	-webkit-animation: jquery 2s ease;
+   animation: jquery 2s ease;
 }
 
 @-moz-keyframes typescript {
   0%   { width: 0px;  }
   100% { width: 60%;  }
 }
-@-moz-keyframes illustrator {
+@-moz-keyframes kubernetes {
   0%   { width: 0px;  }
-  100% { width: 55%;  }
+  100% { width: 90%;  }
 }
 @-moz-keyframes wordpress {
   0%   { width: 0px;  }
@@ -385,9 +398,9 @@ ul#nav li.current a { color: #F06000; }
   0%   { width: 0px;  }
   100% { width: 60%;  }
 }
-@-webkit-keyframes illustrator {
+@-webkit-keyframes kubernetes {
   0%   { width: 0px;  }
-  100% { width: 55%;  }
+  100% { width: 90%;  }
 }
 @-webkit-keyframes wordpress {
   0%   { width: 0px;  }
@@ -788,15 +801,15 @@ call-to-action .button {
 /* ------------------------------------------------------------------ */
 
 #contact {
-   background: #191919;
+   background:  var(--black);
    padding-top: 96px;
    padding-bottom: 102px;
-   color: #636363;
+   color: #bebebe;
 }
 #contact .section-head { margin-bottom: 42px; }
 
-#contact a, #contact a:visited  { color: #11ABB0; }
-#contact a:hover, #contact a:focus { color: #fff; }
+#contact a, #contact a:visited  { color: #959e9e; }
+#contact a:hover, #contact a:focus { color: #00CCCC; }
 
 #contact h1 {
    font: 18px/24px 'opensans-bold', sans-serif;
@@ -820,6 +833,11 @@ call-to-action .button {
 #contact h4 {
    font: 16px/24px 'opensans-bold', sans-serif;
    color: #EBEEEE;
+   margin-bottom: 6px;
+}
+
+#contact a {
+   font: 16px/24px 'opensans-bold', sans-serif;
    margin-bottom: 6px;
 }
 #contact p.lead {
@@ -927,7 +945,7 @@ call-to-action .button {
 footer {
    padding-top: 48px;
    margin-bottom: 48px;
-   color: #303030;
+   color:  var(--black);
    font-size: 14px;
    text-align: center;
    position: relative;
@@ -938,8 +956,9 @@ footer a:hover, footer a:focus { color: #fff; }
 
 /* copyright */
 footer .copyright {
-    margin: 0;
-    padding: 0;
+   font: 15px/36px 'opensans-regular', Sans-serif;
+   color: #ffffff !important;
+   border: none;
  }
 footer .copyright li {
     display: inline-block;

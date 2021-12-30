@@ -9,6 +9,7 @@ import {
 } from "aws-cdk-lib/aws-apigateway";
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
 import { TargetRegions } from "../utils/environments";
+import { PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 /**
  * A stack for our simple Lambda-powered web service
@@ -30,9 +31,17 @@ export class ContactFormStack extends Stack {
       environment: {
         SES_REGION: TargetRegions.EUROPE,
         FROM_NAME: "Peter Kaskonas",
-        FROM_EMAIL: "contact@peterkaskonas.com"
+        FROM_EMAIL: "contact@peterkaskonas.com",
+        TO_EMAIL: "pkpersonal@protonmail.com"
       },
       logRetention: RetentionDays.TWO_WEEKS,
+      initialPolicy: [new PolicyStatement({
+        actions: [
+          'ses:SendRawEmail',
+          'ses:SendEmail',
+        ],
+        resources: ['*'],
+      })]
     });
 
 

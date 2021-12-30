@@ -1,7 +1,6 @@
 import { Construct } from "constructs";
 import { ComputeType, LinuxBuildImage } from "aws-cdk-lib/aws-codebuild";
-import { Stack, StackProps } from "aws-cdk-lib";
-import { AppStage } from "./stages/appStage";
+import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
 import {
   CodePipeline,
   CodePipelineSource,
@@ -15,7 +14,7 @@ import { TargetAccounts, TargetRegions } from "./utils/environments";
  * The stack that defines the application pipeline
  */
 
-function getPipeline(scope: Stack): CodePipeline {
+function getPipeline(scope: Stack, apiEndpoint: CfnOutput): CodePipeline {
   return new CodePipeline(scope, "Pipeline", {
     // The pipeline name
     pipelineName: "aws-cdk-app",
@@ -30,6 +29,9 @@ function getPipeline(scope: Stack): CodePipeline {
       // Install dependencies, build and run cdk synth
       commands: ["yarn install", "yarn build", "yarn cdk synth"],
       primaryOutputDirectory: "packages/infrastructure/cdk.out",
+      envFromCfnOutputs: {
+        "REACT_APP_API_ENDPOINT": apiEndpoint
+      }
     }),
     crossAccountKeys: true,
     codeBuildDefaults: {
@@ -44,16 +46,8 @@ export class WebsitePipelineStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const pipeline = getPipeline(this);
 
     // This is where we add the application stages
-
-    const appDev = new AppStage(this, "appDev", {
-      env: {
-        account: TargetAccounts.DEV,
-        region: TargetRegions.EUROPE,
-      },
-    });
 
     const webDev = new WebsiteStage(this, "webDev", {
       env: {
@@ -69,21 +63,8 @@ export class WebsitePipelineStack extends Stack {
       },
     });
 
-    pipeline.addStage(appDev, {
-      post: [
-        new ShellStep("postDeploy", {
-          commands: [
-            // Use 'curl' to GET the given URL and fail if it returns an error
-            "curl -Ssf $ENDPOINT_URL/items",
-          ],
-          envFromCfnOutputs: {
-            // Get the stack Output from the Stage and make it available in
-            // the shell script as $ENDPOINT_URL.
-            ENDPOINT_URL: appDev.urlOutput,
-          },
-        }),
-      ],
-    });
+    const pipeline = getPipeline(this, webDev.contactFormUrl);
+
 
     pipeline.addStage(webDev, {
       post: [

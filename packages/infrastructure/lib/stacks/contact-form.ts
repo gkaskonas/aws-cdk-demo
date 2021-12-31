@@ -68,7 +68,9 @@ export class ContactFormStack extends Stack {
     const contactFormIntegration = new LambdaIntegration(handler);
 
     const submit = api.root.addResource("submit");
-    const submitMethod = submit.addMethod("POST", contactFormIntegration); // POST /submit
+    const submitMethod = submit.addMethod("POST", contactFormIntegration, {
+      apiKeyRequired: true
+    }); // POST /submit
 
     plan.addApiStage({
       stage: api.deploymentStage,

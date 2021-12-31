@@ -8,11 +8,13 @@ export type ContactDetails = {
   message: string;
 };
 
-const DOMAIN  = process.env.DOMAIN 
+const DOMAIN  = process.env.DOMAIN
 
 export async function main(
   event: APIGatewayProxyEventV2,
 ): Promise<APIGatewayProxyResultV2> {
+if (!DOMAIN) throw new Error("Please add DOMAIN env Variable!")
+
   try {
     if (!event.body)
       throw new Error('Properties name, email and message are required.');
@@ -27,15 +29,15 @@ export async function main(
     if (error instanceof Error) {
       return JSON.stringify({body: {error: error.message}, statusCode: 400});
     }
-    return JSON.stringify({
-      body: {error: JSON.stringify(error)},
+    return {
+      body: JSON.stringify({error: JSON.stringify(error)}),
       statusCode: 400,
       headers: {
         'Access-Control-Allow-Origin': DOMAIN,
         'Access-Control-Allow-Headers': 'x-requested-with',
         'Access-Control-Allow-Credentials': true
       },
-    });
+    };
   }
 }
 
@@ -45,23 +47,26 @@ async function sendEmail({
   message,
 }: ContactDetails): Promise<APIGatewayProxyResultV2> {
   const SES_REGION  = process.env.SES_REGION 
+  
   if (!SES_REGION) {
     throw new Error(
       'Please add the SES_REGION Environment Variable',
     );
   }
+if (!DOMAIN) throw new Error("Please add DOMAIN env Variable!")
+
   const ses = new AWS.SES({region: SES_REGION});
   await ses.sendEmail(sendEmailParams({name, email, message})).promise();
 
-  return JSON.stringify({
-    body: {message: 'Email sent successfully 🎉🎉🎉'},
+  return {
+    body: JSON.stringify({message: 'Email sent successfully 🎉🎉🎉'}),
     statusCode: 200,
     headers: {
       'Access-Control-Allow-Origin': DOMAIN,
       'Access-Control-Allow-Headers': 'x-requested-with',
       'Access-Control-Allow-Credentials': true
     },
-  });
+  };
 }
 
 function sendEmailParams({name, email, message}: ContactDetails): SendEmailRequest {

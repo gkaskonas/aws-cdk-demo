@@ -54,21 +54,29 @@ let resumeData = {
         "MonthOfLeaving":"Sep",
         "YearOfLeaving":"2020",
         "Achievements":""
+      },
+      {
+        "CompanyName":"British Telecoms",
+        "specialization":"Software Developer/Scrum Master",
+        "started": "Sep 2017",
+        "MonthOfLeaving":"Sep",
+        "YearOfLeaving":"2019",
+        "Achievements":""
       }
     ],
     "certificates": [
       {
-        "name": "AWS Certified Security – Specialty",
+        "name": "AWS Security – Specialty",
         "start": "Oct 2021",
         "end": "Oct 2024"
       },
       {
-        "name": "AWS Certified DevOps Engineer – Professional",
+        "name": "AWS DevOps Engineer – Pro",
         "start": "Sep 2021",
         "end": "Sep 2024"
       },
       {
-        "name": "AWS Solutions Architect - Professional",
+        "name": "AWS Solutions Architect - Pro",
         "start": "June 2021",
         "end": "June 2024"
       },

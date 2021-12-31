@@ -861,10 +861,12 @@ call-to-action .button {
 
 #contact input.form-control {
    width: 25%;
+   margin-left: 26%;
 }
 
 #contact textarea.form-control {
    width: 25%;
+   margin-left: 26%;
 }
 #contact input,
 #contact textarea,

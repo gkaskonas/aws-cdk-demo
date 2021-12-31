@@ -21,16 +21,13 @@ export default class ContactUs extends Component {
           <div>        
             <form onSubmit={this.handleSubmit.bind(this)} method="POST">
           <div className="input">
-            <label htmlFor="name">Name</label>
-            <input type="text" className="form-control" value={this.state.name} onChange={this.onNameChange.bind(this)} />
+            <input type="text" className="form-control" placeholder="Name" value={this.state.name} onChange={this.onNameChange.bind(this)} />
           </div>
           <div className="input">
-            <label htmlFor="email">Email</label>
-            <input type="email" className="form-control" aria-describedby="emailHelp" value={this.state.email} onChange={this.onEmailChange.bind(this)} />
+            <input type="email" className="form-control" placeholder="Email" aria-describedby="emailHelp" value={this.state.email} onChange={this.onEmailChange.bind(this)} />
           </div>
           <div className="input">
-            <label htmlFor="message">Message</label>
-            <textarea className="form-control" rows="5" value={this.state.message} onChange={this.onMessageChange.bind(this)} />
+            <textarea className="form-control" rows="5" placeholder="Message..." value={this.state.message} onChange={this.onMessageChange.bind(this)} />
           </div>
           <button className="submit">Submit</button>
         </form></div>

@@ -6,7 +6,8 @@
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-scripts": "5.0.0",
-    "jest": "27.4.5"
+    "jest": "27.4.5",
+    "@datapunt/matomo-tracker-react": "0.5.1"
   },
   "scripts": {
     "dev": "react-scripts start",

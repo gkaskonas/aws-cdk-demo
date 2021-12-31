@@ -1,4 +1,4 @@
-let resumeData = {
+const resumeData = {
     "name": "Peter Kaskonas",
     "role": "Senior Devops Engineer and Solutions Architect",
     "email":"contact@peterkaskonas.com",
@@ -86,7 +86,7 @@ let resumeData = {
         "end": "June 2024"
       },
       {
-        "name": "AWS SysOps Administrator - Associate",
+        "name": "AWS SysOps Admin - Associate",
         "start": "Nov 2020",
         "end": "Nov 2023"
       },

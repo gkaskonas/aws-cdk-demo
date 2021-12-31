@@ -1,5 +1,5 @@
 import { Construct } from "constructs";
-import { ComputeType, LinuxBuildImage } from "aws-cdk-lib/aws-codebuild";
+import { BuildEnvironmentVariableType, ComputeType, LinuxBuildImage } from "aws-cdk-lib/aws-codebuild";
 import { Stack, StackProps } from "aws-cdk-lib";
 import {
   CodePipeline,
@@ -35,10 +35,17 @@ function getPipeline(scope: Stack): CodePipeline {
       buildEnvironment: {
         computeType: ComputeType.SMALL,
         buildImage: LinuxBuildImage.STANDARD_5_0,
+        environmentVariables: {
+          REACT_APP_API_KEY: {
+            type: BuildEnvironmentVariableType.PARAMETER_STORE,
+            value: "CONTACT_FORM_API_KEY"
+          }
+        }
       },
     },
   });
 }
+
 export class WebsitePipelineStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
@@ -63,37 +70,10 @@ export class WebsitePipelineStack extends Stack {
     const pipeline = getPipeline(this);
 
 
-    pipeline.addStage(webDev, {
-      post: [
-        new ShellStep("postDeploy", {
-          commands: [
-            // Use 'curl' to GET the given URL and fail if it returns an error
-            "curl -Ssf $WEBSITE_URL",
-          ],
-          envFromCfnOutputs: {
-            // Get the stack Output from the Stage and make it available in
-            // the shell script as $WEBSITE_URL.
-            WEBSITE_URL: webDev.urlOutput,
-          },
-        }),
-      ],
-    });
+    pipeline.addStage(webDev);
     pipeline.addStage(webProd, {
       pre: [
         new ManualApprovalStep("PromoteToProd"),
-      ],
-      post: [
-        new ShellStep("postDeploy", {
-          commands: [
-            // Use 'curl' to GET the given URL and fail if it returns an error
-            "curl -Ssf $WEBSITE_URL",
-          ],
-          envFromCfnOutputs: {
-            // Get the stack Output from the Stage and make it available in
-            // the shell script as $WEBSITE_URL.
-            WEBSITE_URL: webProd.urlOutput,
-          },
-        }),
       ],
     });
   }

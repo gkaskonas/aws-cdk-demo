@@ -54,12 +54,14 @@ export default class ContactUs extends Component {
     e.preventDefault();
     
     const apiUrl = "https://axv8xnp8me.execute-api.eu-west-1.amazonaws.com/prod"
+    const apiKey = process.env.REACT_APP_API_KEY
     fetch(`${apiUrl}/submit`, {
         method: "POST",
         body: JSON.stringify(this.state),
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey
         },
       }).then(
         ).then((response)=> {

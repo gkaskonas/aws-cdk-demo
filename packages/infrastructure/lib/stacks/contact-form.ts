@@ -30,7 +30,7 @@ export class ContactFormStack extends Stack {
       environment: {
         EMAIL: "aws-access.qzrcx@aleeas.com",
         SES_REGION: this.region,
-        DOMAIN: "peterkaskonas.com"
+        DOMAIN: "*"
       },
       logRetention: RetentionDays.TWO_WEEKS,
       initialPolicy: [new PolicyStatement({
@@ -41,8 +41,7 @@ export class ContactFormStack extends Stack {
         resources: ['*'],
       })]
     });
-
-
+    
     // An API Gateway to make the Lambda web-accessible
     const api = new LambdaRestApi(this, id, {
       restApiName: `contact-form-api`,
@@ -55,10 +54,34 @@ export class ContactFormStack extends Stack {
       proxy: false,
     });
 
+    const plan = api.addUsagePlan('UsagePlan', {
+      name: 'contact-form-usage-plan',
+      throttle: {
+        rateLimit: 10,
+        burstLimit: 2
+      }
+    });
+    
+    const key = api.addApiKey('ApiKey');
+    plan.addApiKey(key);
+
     const contactFormIntegration = new LambdaIntegration(handler);
 
-    const items = api.root.addResource("submit");
-    items.addMethod("POST", contactFormIntegration); // POST /items
+    const submit = api.root.addResource("submit");
+    const submitMethod = submit.addMethod("POST", contactFormIntegration); // POST /submit
+
+    plan.addApiStage({
+      stage: api.deploymentStage,
+      throttle: [
+        {
+          method: submitMethod,
+          throttle: {
+            rateLimit: 10,
+            burstLimit: 2
+          }
+        }
+      ]
+    })
 
     this.urlOutput = new CfnOutput(this, "Url", {
       value: api.url,

@@ -66,6 +66,11 @@ const resumeData = {
     ],
     "certificates": [
       {
+        "name": "AWS Advanced Networking – Specialty",
+        "start": "Feb 2022",
+        "end": "Feb 2025"
+      },
+      {
         "name": "AWS Security – Specialty",
         "start": "Oct 2021",
         "end": "Oct 2024"

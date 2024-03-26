@@ -20,7 +20,7 @@
     "lerna": "4.0.0"
   },
   "resolutions": {
-    "table": "6.7.5"
+    "table": "6.8.2"
   },
   "dependencies": {
     "cdk": "2.0.0"
